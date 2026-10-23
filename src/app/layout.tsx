@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import { ConsentAndAds } from "@/components/ConsentAndAds";
 import { JsonLd } from "@/components/JsonLd";
 import { websiteJsonLd } from "@/lib/seo";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: SITE_URL ? new URL(SITE_URL) : undefined,
@@ -51,6 +52,14 @@ export default function RootLayout({
 
   return (
     <html lang="ar" dir="rtl">
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5789292170505318"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>
         <JsonLd data={websiteJsonLd()} />
         <Header items={items} />
