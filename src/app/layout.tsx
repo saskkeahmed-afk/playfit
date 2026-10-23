@@ -12,10 +12,25 @@ import { websiteJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: SITE_URL ? new URL(SITE_URL) : undefined,
-  title: { default: `${SITE_NAME} — هل لعبتك هتشتغل على جهازك؟`, template: `%s | ${SITE_NAME}` },
-  description: "اعرف مدى توافق جهازك مع الألعاب وقارنه بالمتطلبات الرسمية، مع تقدير للفريمات مبني على بيانات حقيقية عند توفرها.",
+
+  title: {
+    default: `${SITE_NAME} — هل لعبتك هتشتغل على جهازك؟`,
+    template: `%s | ${SITE_NAME}`,
+  },
+
+  description:
+    "اعرف مدى توافق جهازك مع الألعاب وقارنه بالمتطلبات الرسمية، مع تقدير للفريمات مبني على بيانات حقيقية عند توفرها.",
+
   applicationName: SITE_NAME,
-  alternates: SITE_URL ? { types: { "application/rss+xml": `${SITE_URL}/feed.xml` } : undefined,
+
+  alternates: SITE_URL
+    ? {
+        types: {
+          "application/rss+xml": `${SITE_URL}/feed.xml`,
+        },
+      }
+    : undefined,
+
   verification: {
     google: "EFF_fqEKkVoMtwBu3upf5Z_ogDtBL_RpwKr4CAtBGBw",
   },
