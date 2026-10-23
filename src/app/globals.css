@@ -1,0 +1,48 @@
+@import "@fontsource/ibm-plex-sans-arabic/arabic-400.css";
+@import "@fontsource/ibm-plex-sans-arabic/arabic-500.css";
+@import "@fontsource/ibm-plex-sans-arabic/arabic-700.css";
+@import "@fontsource/ibm-plex-sans-arabic/latin-400.css";
+@import "@fontsource/ibm-plex-sans-arabic/latin-500.css";
+@import "@fontsource/ibm-plex-sans-arabic/latin-700.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+
+html { scroll-padding-top: 5rem; }
+body {
+  @apply bg-ink-950 font-sans text-mist-100 antialiased;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+:focus-visible { outline: 2px solid #2de2e6; outline-offset: 3px; border-radius: 4px; }
+::selection { background: #39ff8855; }
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .panel { @apply rounded-2xl border border-ink-700 bg-ink-900; }
+  .panel-soft { @apply rounded-xl border border-ink-700/70 bg-ink-800/60; }
+  .btn { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2 text-sm font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-neon text-ink-950 hover:bg-neon-dim; }
+  .btn-ghost { @apply btn border border-ink-600 text-mist-100 hover:border-cyan-glow hover:text-cyan-glow; }
+  .field { @apply min-h-11 w-full rounded-lg border border-ink-600 bg-ink-950 px-3 py-2 text-sm text-mist-100 placeholder:text-mist-500 focus:border-cyan-glow; }
+  .label { @apply mb-1 block text-sm font-medium text-mist-300; }
+  .chip { @apply inline-flex items-center rounded-md border border-ink-600 bg-ink-800 px-2 py-0.5 text-xs text-mist-300; }
+  .prose-ar p { @apply mb-4 text-mist-300; max-width: 68ch; }
+  .prose-ar ul { @apply mb-4 list-disc space-y-2 pe-6 text-mist-300; max-width: 68ch; }
+  .prose-ar h2 { @apply mb-3 mt-10 text-xl font-bold text-mist-100; }
+  .prose-ar h3 { @apply mb-2 mt-6 text-lg font-bold text-mist-100; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
+.scanline::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(57,255,136,0.07), transparent);
+  height: 40%; animation: scan 5s linear infinite;
+}
