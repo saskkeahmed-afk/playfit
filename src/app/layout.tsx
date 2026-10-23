@@ -54,6 +54,11 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <head>
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-5789292170505318"
+        />
+
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5789292170505318"
@@ -61,6 +66,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
       </head>
+
       <body>
         <JsonLd data={websiteJsonLd()} />
         <Header items={items} />
