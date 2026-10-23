@@ -1,8 +1,10 @@
+
 export const SITE_NAME = "PlayFit";
 export const SITE_NAME_AR = "بلاي فت";
 
 function resolveSiteUrl(): string | null {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
   if (raw) {
     try {
       const u = new URL(raw);
@@ -11,11 +13,15 @@ function resolveSiteUrl(): string | null {
       return null;
     }
   }
-  if (process.env.NODE_ENV === "development") return "http://localhost:3000";
-  return null;
+
+  if (process.env.NODE_ENV === "development") {
+    return "http://localhost:3000";
+  }
+
+  return "https://playfit-gules.vercel.app";
 }
 
-/** null = الدومين الإنتاجي غير مضبوط: لا نُصدر canonical ولا sitemap. */
+/** رابط الموقع المستخدم في canonical و sitemap. */
 export const SITE_URL: string | null = resolveSiteUrl();
 
 export const ADS = {
