@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import AdsterraAd from "@/components/AdsterraAd";
 import { games } from "@/data/games";
 import { gpus } from "@/data/gpus";
 import { cpus } from "@/data/cpus";
@@ -246,7 +247,7 @@ export default async function HomePage() {
           </ul>
         </section>
 
-        <AdSlot name="inContent" />
+        <AdsterraAd />
 
         <section aria-labelledby="hw" className="grid gap-8 md:grid-cols-2">
           <div>
