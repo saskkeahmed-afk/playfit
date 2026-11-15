@@ -3,13 +3,24 @@
 
 import { useEffect, useRef } from 'react';
 
+declare global {
+  interface Window {
+    atOptions?: {
+      key: string;
+      format: string;
+      height: number;
+      width: number;
+      params: Record<string, unknown>;
+    };
+  }
+}
+
 export default function AdsterraAd() {
   const nativeRef = useRef<HTMLDivElement>(null);
   const banner320Ref = useRef<HTMLDivElement>(null);
   const banner300Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 1. Native Banner
     const nativeScript = document.createElement('script');
     nativeScript.async = true;
     nativeScript.setAttribute('data-cfasync', 'false');
@@ -18,16 +29,14 @@ export default function AdsterraAd() {
 
     nativeRef.current?.appendChild(nativeScript);
 
-    // 2. Banner 320x50
-    // 3. Banner 300x250
     const loadBanner = (
       container: HTMLDivElement,
       key: string,
       width: number,
       height: number
-    ) => {
-      return new Promise<void>((resolve) => {
-        (window as any).atOptions = {
+    ): Promise<void> => {
+      return new Promise((resolve) => {
+        window.atOptions = {
           key,
           format: 'iframe',
           height,
@@ -37,7 +46,6 @@ export default function AdsterraAd() {
 
         const script = document.createElement('script');
         script.src = `https://bauval.org/22/${key}`;
-        script.async = false;
 
         script.onload = () => resolve();
         script.onerror = () => resolve();
@@ -68,30 +76,30 @@ export default function AdsterraAd() {
 
     loadAllBanners();
 
+    return () => {
+      nativeRef.current?.replaceChildren();
+      banner320Ref.current?.replaceChildren();
+      banner300Ref.current?.replaceChildren();
+    };
   }, []);
 
   return (
     <div className="w-full flex flex-col items-center gap-8 my-8">
-
-      {/* Native Banner */}
       <div
-        id="container-5efecba69f9e969247dbb4d9ceb9677c"
         ref={nativeRef}
+        id="container-5efecba69f9e969247dbb4d9ceb9677c"
         className="w-full flex justify-center"
       />
 
-      {/* Banner 320x50 */}
       <div
         ref={banner320Ref}
         className="w-full flex justify-center overflow-hidden"
       />
 
-      {/* Banner 300x250 */}
       <div
         ref={banner300Ref}
         className="w-full flex justify-center overflow-hidden"
       />
-
     </div>
   );
 }
