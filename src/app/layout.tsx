@@ -11,6 +11,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { websiteJsonLd } from "@/lib/seo";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import AdsterraAd from "@/components/AdsterraAd";
 
 export const metadata: Metadata = {
   metadataBase: SITE_URL ? new URL(SITE_URL) : undefined,
@@ -69,10 +70,17 @@ export default function RootLayout({
 
       <body>
         <JsonLd data={websiteJsonLd()} />
+
         <Header items={items} />
+
+        <AdsterraAd />
+
         <main id="main">{children}</main>
+
         <Footer />
+
         <ConsentAndAds />
+
         <GoogleAnalytics gaId="G-F14809YL5W" />
       </body>
     </html>
