@@ -73,12 +73,20 @@ export default function RootLayout({
 
         <Header items={items} />
 
-<main id="main">
-  {children}
-  <AdsterraAd />
-</main>
+        <main id="main">
+          {children}
+          <AdsterraAd />
+        </main>
 
-<Footer />
+        <Footer />
+
+        {/* Adsterra Social Bar */}
+        <Script
+          id="adsterra-social-bar"
+          src="https://bauval.org/14/9a1e9a7eed71952b97ad191ab5039fb9"
+          strategy="afterInteractive"
+          data-cfasync="false"
+        />
 
         <ConsentAndAds />
 
