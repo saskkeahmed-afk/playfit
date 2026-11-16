@@ -73,11 +73,12 @@ export default function RootLayout({
 
         <Header items={items} />
 
-        <AdsterraAd />
+<main id="main">
+  {children}
+  <AdsterraAd />
+</main>
 
-        <main id="main">{children}</main>
-
-        <Footer />
+<Footer />
 
         <ConsentAndAds />
 

@@ -84,22 +84,35 @@ export default function AdsterraAd() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center gap-8 my-8">
-      <div
-        ref={nativeRef}
-        id="container-5efecba69f9e969247dbb4d9ceb9677c"
-        className="w-full flex justify-center"
-      />
+    <section className="w-full flex justify-center my-12 px-3">
+      <div className="w-full max-w-[900px] flex flex-col items-center gap-10">
 
-      <div
-        ref={banner320Ref}
-        className="w-full flex justify-center overflow-hidden"
-      />
+        {/* Native Ad */}
+        <div className="w-full flex justify-center overflow-hidden">
+          <div
+            ref={nativeRef}
+            id="container-5efecba69f9e969247dbb4d9ceb9677c"
+            className="w-full max-w-[900px] flex justify-center"
+          />
+        </div>
 
-      <div
-        ref={banner300Ref}
-        className="w-full flex justify-center overflow-hidden"
-      />
-    </div>
+        {/* Banner 320x50 */}
+        <div className="w-full flex justify-center overflow-hidden">
+          <div
+            ref={banner320Ref}
+            className="max-w-full flex justify-center"
+          />
+        </div>
+
+        {/* Banner 300x250 */}
+        <div className="w-full flex justify-center overflow-hidden">
+          <div
+            ref={banner300Ref}
+            className="max-w-full flex justify-center"
+          />
+        </div>
+
+      </div>
+    </section>
   );
 }
