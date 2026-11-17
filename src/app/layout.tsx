@@ -1,14 +1,17 @@
 
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 import { games } from "@/data/games";
 import { toSlim } from "@/lib/search-index";
+
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ConsentAndAds } from "@/components/ConsentAndAds";
 import { JsonLd } from "@/components/JsonLd";
 import { websiteJsonLd } from "@/lib/seo";
+
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import AdsterraAd from "@/components/AdsterraAd";
@@ -25,14 +28,14 @@ export const metadata: Metadata = {
     "اعرف مدى توافق جهازك مع الألعاب وقارنه بالمتطلبات الرسمية، مع تقدير للفريمات مبني على بيانات حقيقية عند توفرها.",
 
   applicationName: SITE_NAME,
-  
-    openGraph: {
+
+  openGraph: {
     type: "website",
     siteName: SITE_NAME,
     title: `${SITE_NAME} — هل لعبتك هتشتغل على جهازك؟`,
     description:
       "اعرف هل جهازك يشغل ألعابك المفضلة مع PlayFit.",
-    url: SITE_URL,
+    ...(SITE_URL ? { url: SITE_URL } : {}),
   },
 
   alternates: SITE_URL
