@@ -2,7 +2,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-import { SITE_NAME, SITE_URL } from "@/lib/config";
+import { SITE_NAME, SITE_NAME_AR, SITE_URL } from "@/lib/config";
 import { games } from "@/data/games";
 import { toSlim } from "@/lib/search-index";
 
@@ -16,26 +16,69 @@ import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import AdsterraAd from "@/components/AdsterraAd";
 
+const siteTitle =
+  "PlayFit (بلاي فت) | حساب الفريمات FPS ومتطلبات تشغيل الألعاب";
+
+const siteDescription =
+  "PlayFit بلاي فت منصة عربية لفحص توافق الكمبيوتر مع الألعاب. اعرف هل لعبتك هتشتغل على جهازك، وقارن المعالج وكرت الشاشة، واكتشف الفريمات FPS المتوقعة ومتطلبات التشغيل الرسمية.";
+
 export const metadata: Metadata = {
   metadataBase: SITE_URL ? new URL(SITE_URL) : undefined,
 
   title: {
-    default: `${SITE_NAME} — هل لعبتك هتشتغل على جهازك؟`,
+    default: siteTitle,
     template: `%s | ${SITE_NAME}`,
   },
 
-  description:
-    "اعرف مدى توافق جهازك مع الألعاب وقارنه بالمتطلبات الرسمية، مع تقدير للفريمات مبني على بيانات حقيقية عند توفرها.",
+  description: siteDescription,
 
-  applicationName: SITE_NAME,
+  applicationName: "PlayFit",
+
+  authors: [{ name: "PlayFit" }],
+  creator: "PlayFit",
+  publisher: "PlayFit",
+
+  category: "Technology",
+
+  keywords: [
+    "PlayFit",
+    "بلاي فت",
+    "حساب الفريمات",
+    "FPS Calculator",
+    "حساب FPS",
+    "متطلبات تشغيل الألعاب",
+    "فحص توافق الألعاب",
+    "هل لعبتي هتشتغل",
+    "كروت الشاشة",
+    "المعالجات",
+    "Gaming PC Checker",
+  ],
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 
   openGraph: {
     type: "website",
-    siteName: SITE_NAME,
-    title: `${SITE_NAME} — هل لعبتك هتشتغل على جهازك؟`,
-    description:
-      "اعرف هل جهازك يشغل ألعابك المفضلة مع PlayFit.",
+    locale: "ar_EG",
+    siteName: "PlayFit | بلاي فت",
+    title: siteTitle,
+    description: siteDescription,
     ...(SITE_URL ? { url: SITE_URL } : {}),
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
   },
 
   alternates: SITE_URL

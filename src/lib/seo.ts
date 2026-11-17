@@ -10,7 +10,7 @@ interface MetaInput {
   noindex?: boolean;
 }
 
-/** كل صفحة تحصل على canonical فقط عند ضبط الدومين الإنتاجي. */
+/** إعداد بيانات SEO لكل صفحة. */
 export function buildMetadata({
   title,
   description,
@@ -22,15 +22,23 @@ export function buildMetadata({
   return {
     title,
     description,
+
     alternates: url ? { canonical: url } : undefined,
-    robots: noindex ? { index: false, follow: true } : undefined,
+
+    robots: noindex
+      ? { index: false, follow: true }
+      : {
+          index: true,
+          follow: true,
+        },
 
     openGraph: {
       title,
       description,
       type: "website",
-      locale: "ar_AR",
-      siteName: SITE_NAME,
+      locale: "ar_EG",
+      siteName: "PlayFit | بلاي فت",
+
       ...(url
         ? {
             url,
@@ -39,7 +47,7 @@ export function buildMetadata({
                 url: "/opengraph-image.png",
                 width: 1200,
                 height: 630,
-                alt: SITE_NAME,
+                alt: "PlayFit - بلاي فت",
               },
             ],
           }
@@ -65,32 +73,29 @@ export function safeJsonLd(data: unknown): string {
     .replace(/\u2029/g, "\\u2029");
 }
 
-/** بيانات اسم الموقع التي تستخدمها Google Search. */
+/** بيانات هوية PlayFit لمحركات البحث. */
 export function websiteJsonLd() {
   if (!SITE_URL) return null;
 
+  const organizationId = `${SITE_URL}/#organization`;
+  const websiteId = `${SITE_URL}/#website`;
+
   return {
     "@context": "https://schema.org",
+
     "@graph": [
       {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        name: SITE_NAME,
-        alternateName: [
-          "بلاي فت",
-          "playfit-gules.vercel.app",
-        ],
-        url: SITE_URL,
-        inLanguage: "ar",
-        publisher: {
-          "@id": `${SITE_URL}/#org`,
-        },
-      },
-      {
         "@type": "Organization",
-        "@id": `${SITE_URL}/#org`,
-        name: SITE_NAME,
+        "@id": organizationId,
+
+        name: "PlayFit",
+        alternateName: "بلاي فت",
+
+        description:
+          "PlayFit منصة عربية لفحص توافق أجهزة الكمبيوتر مع الألعاب ومقارنة متطلبات التشغيل وتقدير معدل الإطارات FPS.",
+
         url: SITE_URL,
+
         logo: {
           "@type": "ImageObject",
           url: `${SITE_URL}/brand/logo-mark-512.png`,
@@ -98,10 +103,33 @@ export function websiteJsonLd() {
           height: 512,
         },
       },
+
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+
+        name: "PlayFit",
+
+        alternateName: [
+          "PlayFit بلاي فت",
+          "بلاي فت لحساب الفريمات",
+        ],
+
+        description:
+          "منصة عربية مجانية لمعرفة هل الألعاب ستعمل على جهازك، ومقارنة المعالجات وكروت الشاشة وتقدير الفريمات FPS.",
+
+        url: SITE_URL,
+        inLanguage: "ar-EG",
+
+        publisher: {
+          "@id": organizationId,
+        },
+      },
     ],
   };
 }
 
+/** بيانات Breadcrumbs للصفحات الداخلية. */
 export function breadcrumbJsonLd(
   items: { name: string; path: string }[]
 ) {
@@ -110,6 +138,7 @@ export function breadcrumbJsonLd(
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+
     itemListElement: items.map((it, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -119,47 +148,60 @@ export function breadcrumbJsonLd(
   };
 }
 
+/** بيانات صفحات الألعاب. */
 export function videoGameJsonLd(game: Game) {
   return {
     "@context": "https://schema.org",
     "@type": "VideoGame",
+
     name: game.title,
     description: game.descriptionAr,
+
     inLanguage: "ar",
     genre: game.genres,
     gamePlatform: game.platforms,
     datePublished: String(game.releaseYear),
+
     author: {
       "@type": "Organization",
       name: game.developer,
     },
+
     publisher: {
       "@type": "Organization",
       name: game.publisher,
     },
+
     ...(SITE_URL
       ? { url: `${SITE_URL}/games/${game.slug}` }
       : {}),
   };
 }
 
+/** بيانات المقالات والأدلة. */
 export function articleJsonLd(guide: Guide) {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
+
     headline: guide.title,
     description: guide.description,
+
     inLanguage: "ar",
+
     datePublished: guide.publishedAt,
     dateModified: guide.updatedAt,
+
     author: {
       "@type": "Organization",
       name: SITE_NAME,
     },
+
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
     },
+
     ...(SITE_URL
       ? {
           mainEntityOfPage: `${SITE_URL}/guides/${guide.slug}`,
@@ -168,14 +210,17 @@ export function articleJsonLd(guide: Guide) {
   };
 }
 
-/** يُستخدم فقط عندما تُعرض الأسئلة والأجوبة نفسها ظاهرة في الصفحة. */
+/** بيانات الأسئلة الشائعة. */
 export function faqJsonLd(items: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+
     mainEntity: items.map((i) => ({
       "@type": "Question",
+
       name: i.q,
+
       acceptedAnswer: {
         "@type": "Answer",
         text: i.a,
